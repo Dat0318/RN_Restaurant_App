@@ -1,0 +1,105 @@
+mixin comment(commentDate)
+  .comment
+    if commentDate.postedByAdmin
+      em (Post by Admin)
+    .date= commentDate.date
+    .author= commentDate.author
+    .text= commentDate.text
+
+doctype html
+doctype xml
+doctype transitional
+doctype strict
+html
+  head
+    link(rel="stylesheet" href="style.css")
+
+    style.
+      p {
+        color: red;
+        text-decoration: underline;
+      }
+
+      .comment {
+        font-family: sans-serif;
+        line-height: 1.5;
+        padding: 10px;
+        border: 1px solid #555;
+        width: 250px;
+      }
+
+      .date {font-size: 85%; text-align: right}
+      .author {font-size: 110%; font-weight: bold;}
+      .text {font-size: 100%}
+  body
+    - const c = {postedByAdmin: true, date: '04-02-2018', author: 'dcode', text: 'Hey mate!Nice Tutorials.'}
+    +comment(c)
+    
+    - const c1 = {date: '07-02-2020', author: 'Bruce', text: 'That is funny.'}
+    +comment(c1)
+    
+    //- .comment
+    //-   .date 
+    //-   .author
+    //-   .text 
+
+    include includes/nav
+
+    // orderStatus => Pending || In_Transit || Completed
+    -const orderStatus = 'Random'
+
+    case orderStatus
+      when 'Pending'
+        p Your order has been placed and will be sent shortly.
+      when 'In_Transit'
+        p Your order is on the move - you should recevie it soon!
+      when 'Completed'
+        p Your order has been complete.
+      default
+        p This is a default version.
+
+    h2 My web Application
+    -let user = {name: "Domenic", loggedIn: false, lastLogin: 6}
+    if user.loggedIn
+      p
+        | Welcome back,
+        strong #{user.name}
+
+    else if user.lastLogin < 10
+      p Your lasy loogin was #{user.lastLogin} minutes ago
+      p
+        a(href="/login") Log In Again
+    else
+      a(href="/login") Log In
+    h1#pageTitle welcome to code
+
+    //- each n, i in [50,2,3,4,5]
+    //- -const names = ["DOm", "Sophie", "Mark"]
+    - const names = {"Web Dev": 85, "Software Design": 75, "name" : "content"}
+    each n, i in names
+      p=n + ' - ' + i
+    else
+      strong No values are here!
+
+    -const pStyle={"text-align":"center", "text-transform":"uppercase"}
+    p.big-para(style=pStyle).
+      this is a paragraph
+      and this is a new line
+    
+    ul
+      li this is item #1
+      li this is item #2
+      li this is item #3
+    .display-box
+    #myOnDevicesInput(type="password" name="inPwd" data-js=`${5>2  ? "Ok" : "Not Ok"}`)
+
+    -const myClass = ["class1","class2","class3"]
+    div(class=myClass).my-div
+
+    -const myStyle = {"color": "red", "background-color": "blue"}
+    div(style=myStyle)
+
+    -const myAttributes = {"src" : "myPhoto.png", "alt": "this is my Photo"}
+    img&attributes(myAttributes)
+
+    input(type="text" disable=false)
